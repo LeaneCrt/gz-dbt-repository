@@ -1,6 +1,3 @@
- {{ config(materialized='table') }}
-
-
 SELECT 
     opm.date_date 
     , COUNT (opm.orders_id) AS nb_transaction
