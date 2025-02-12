@@ -1,3 +1,6 @@
+ {{ config(materialized='table') }}
+
+
 SELECT 
     opm.date_date 
     , COUNT (opm.orders_id) AS nb_transaction
@@ -12,3 +15,5 @@ FROM {{ ref('int_orders_operational')}} AS opm
 JOIN {{ ref('int_orders_margin')}} AS om
 USING (orders_id) 
 GROUP BY date_date 
+
+
