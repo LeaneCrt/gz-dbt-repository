@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    tables:
+      - name: product
+        identifier: raw_gz_product
+        description: sales of Greenweez / we have on row per products_id found in each orders_id
+        columns:
+          - name: products_id
+            description: id of the products 
+            tests: 
+              - unique 
+              - not_null
+          - name: purchSE_PRICE
+            description: purchase price of the products
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+         # Freshness testing - make sure to fill in the ...
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness:
+          warn_after: { count: 90, period: day }
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: id of the orders 
+          - name: pdt_id 
+            description: id of the product
+          - name: revenue
+            description: order's turnover 
+          - name: quantity
+            description: quantity of products bought  
+      - name: ship
+        identifier: raw_gz_ship
+        description: ship of Greenweez / we have on row per shipping fee found in each orders_id
+        columns:
+          - name: orders_id
+            description: id of the order 
+            tests: 
+              - unique 
+              - not_null
+          - name: shipping_fee 
+            description: fee paid to ship
+          - name: shipping_fee_1
+            description: fee paid to ship / same as shipping_fee
+          - name: logCost
+            description: logistic cost 
+          - name: ship_cost
+            description: shipping cost
