@@ -5,3 +5,4 @@ SELECT
     , ROUND(SUM(click),2) AS click
 FROM {{ref('int_campaigns')}}
 GROUP BY date_date 
+ORDER BY date_date DESC
